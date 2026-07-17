@@ -1,1 +1,22 @@
 .claude
+*.so
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# KINTSUGI 运行时数据
+data/
+*.scap
+*.jsonl
+*.log
+
+# 编辑器临时文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 虚拟环境
+.venv/
+venv/
