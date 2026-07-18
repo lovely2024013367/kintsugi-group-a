@@ -460,7 +460,13 @@ class RepairGenerator:
         if filter_irrelevant:
             logger.info("  Applying batch judgment filtering")
             judgment = batch_judge_repairs(self.llm_client, candidates, return_debug_info=True)
-            needs_repair_set = set(judgment.get('needs_repair', []))
+
+            def _normalize_func_name(name: str) -> str:
+                return str(name).replace('\\\\', '\\')
+
+            needs_repair_set = {
+                _normalize_func_name(name) for name in judgment.get('needs_repair', [])
+            }
 
             debug_info = judgment.get('_debug', {})
             additional_llm_calls['batch_judge_call'] = {
@@ -473,7 +479,7 @@ class RepairGenerator:
             filtered = []
             for pair in candidates:
                 func_name = pair['abnormal']['function']['name']
-                if func_name in needs_repair_set:
+                if _normalize_func_name(func_name) in needs_repair_set:
                     filtered.append(pair)
                 else:
                     logger.info(f"    Skipped: {func_name} (batch judgment: no repair needed)")
