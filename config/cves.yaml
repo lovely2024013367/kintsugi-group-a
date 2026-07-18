@@ -28,6 +28,7 @@ cves:
     manual_install: false
     filter_irrelevant: true
     backtrack_repair: null
+    repair_method: syscall
     use_attack_flag: true
 
   # Drupal RCE (Drupalgeddon 2) - arbitrary code execution via Form API #post_render
